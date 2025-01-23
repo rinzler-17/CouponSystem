@@ -1,6 +1,10 @@
 # CouponSystem
 An app to manage and apply coupons on an online shopping cart.
 
+## Building and running the project
+
+## Extensibility
+
 Cases:
 1. In bxgy coupon, there can be case where getProduct includes a product not present in the cart. This can be addressed by
    creating an inventory of products in the DB, mapping productID to its corresponding price.
