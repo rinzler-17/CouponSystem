@@ -1,7 +1,7 @@
 package com.monk.couponsystem.services;
 
 import com.monk.couponsystem.coupons.CouponDetails;
-import com.monk.couponsystem.factory.AbstractCouponDetailsFactory;
+import com.monk.couponsystem.utils.AbstractCouponDetailsFactory;
 import com.monk.couponsystem.models.*;
 import com.monk.couponsystem.repositories.CouponRepository;
 
@@ -62,18 +62,6 @@ public class CouponService {
 
     public List<ApplicableCoupon> getApplicableCoupons(Cart cart) {
 
-        // Initialize item prices from product inventory
-        for (CartItem item: cart.getItems()) {
-            Optional<Product> product = productService.getProductById(item.getProductId());
-            if (product.isEmpty()) {
-                // TODO: create response entity accordingly based on exception
-                throw new RuntimeException(String.format("Cart item %d not found in product inventory", item.getProductId()));
-            } else if (product.get().getQuantity() < item.getQuantity()) {
-                throw new RuntimeException(String.format("Insufficient quantity for cart item %d in product inventory", item.getProductId()));
-            }
-            item.setPrice(product.get().getPrice());
-        }
-
         //log.info(cart.toString());
         List<ApplicableCoupon> applicableCoupons = new ArrayList<>();
         List<Coupon> coupons = couponRepository.findAll();
@@ -83,11 +71,11 @@ public class CouponService {
 
         for (Coupon coupon: coupons) {
             CouponDetails couponDetails = couponDetailsFactory.getCouponDetails(coupon);
-                if (couponDetails.isApplicable(cart)) {
+                if (couponDetails.isApplicable(cart, productService)) {
                     applicableCoupons.add(ApplicableCoupon.builder()
                             .id(couponDetails.getId())
                             .type(couponDetails.getType())
-                            .discount(couponDetails.getDiscountAmount(cart))
+                            .discount(couponDetails.getDiscountAmount(cart, productService))
                             .build());
                 }
         }

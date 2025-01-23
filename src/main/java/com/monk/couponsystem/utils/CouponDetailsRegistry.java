@@ -1,4 +1,4 @@
-package com.monk.couponsystem.factory;
+package com.monk.couponsystem.utils;
 
 import java.util.HashMap;
 import java.util.Map;

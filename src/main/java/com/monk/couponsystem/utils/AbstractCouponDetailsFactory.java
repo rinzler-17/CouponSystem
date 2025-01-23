@@ -1,4 +1,4 @@
-package com.monk.couponsystem.factory;
+package com.monk.couponsystem.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

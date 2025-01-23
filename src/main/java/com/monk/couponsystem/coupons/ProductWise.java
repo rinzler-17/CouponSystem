@@ -23,7 +23,7 @@ public class ProductWise extends CouponDetails {
     }
 
     @Override
-    public boolean isApplicable(Cart cart) {
+    public boolean isApplicable(Cart cart, ProductService productService) {
         for (CartItem item : cart.getItems()) {
             if (Objects.equals(item.getProductId(), productId) && item.getQuantity()>0) {
                 return true;
@@ -33,7 +33,8 @@ public class ProductWise extends CouponDetails {
     }
 
     @Override
-    public Double getDiscountAmount(Cart cart) {
+    public Double getDiscountAmount(Cart cart, ProductService productService) {
+        populatePrices(cart, productService);
         for (CartItem item: cart.getItems()) {
             if (Objects.equals(item.getProductId(), productId)) {
                 return item.getQuantity()* item.getPrice()* (discount /100.0);
