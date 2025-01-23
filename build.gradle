@@ -21,7 +21,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.projectlombok:lombok:1.18.36'
-	// https://mvnrepository.com/artifact/org.reflections/reflections
 	implementation group: 'org.reflections', name: 'reflections', version: '0.9.10'
 	annotationProcessor 'org.projectlombok:lombok:1.18.36'
 	implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.1.0'
@@ -30,6 +29,7 @@ dependencies {
 
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.15.2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
