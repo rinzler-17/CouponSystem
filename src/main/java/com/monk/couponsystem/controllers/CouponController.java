@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/coupons")
+@RequestMapping("/api/v1")
 public class CouponController {
 
     @Autowired
@@ -21,32 +21,32 @@ public class CouponController {
     // TODO: add error handling
 
     // Create coupon
-    @PostMapping
+    @PostMapping("/coupons")
     public ResponseEntity<?> createCoupon(@RequestBody Coupon coupon) {
         return couponService.createCoupon(coupon);
     }
 
     // Get all coupons
-    @GetMapping
+    @GetMapping("/coupons")
     public ResponseEntity<List<Coupon>> getAllCoupons() {
         return ResponseEntity.ok(couponService.getAllCoupons());
     }
 
     // Get coupon by id
-    @GetMapping("/{id}")
+    @GetMapping("/coupons/{id}")
     public ResponseEntity<Coupon> getCouponById(@PathVariable Long id) {
         Optional<Coupon> coupon = couponService.getCouponById(id);
         return coupon.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     // Update coupon by id
-    @PutMapping("/{id}")
+    @PutMapping("/coupons/{id}")
     public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id, @RequestBody Coupon updatedCoupon) {
         return ResponseEntity.ok(couponService.updateCoupon(id, updatedCoupon));
     }
 
     // Delete coupon by id
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/coupons/{id}")
     public ResponseEntity<Void> deleteCoupon(@PathVariable Long id) {
         couponService.deleteCoupon(id);
         return ResponseEntity.ok().build();
