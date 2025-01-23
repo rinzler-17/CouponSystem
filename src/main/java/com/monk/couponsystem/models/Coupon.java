@@ -5,12 +5,12 @@ import com.monk.couponsystem.models.converters.JsonNodeConverter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
-@Getter
+@Data
 public class Coupon {
 
     @Id

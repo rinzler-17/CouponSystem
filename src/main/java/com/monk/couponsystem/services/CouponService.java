@@ -88,7 +88,15 @@ public class CouponService {
             throw new RuntimeException("Coupon not found");
         }
 
-        // TODO
+        CouponDetails couponDetails = couponDetailsFactory.getCouponDetails(coupon.get());
+        couponDetails.applyCouponDiscount(cart, productService);
+
+        // Initialize null values to 0
+        for (CartItem item: cart.getItems()) {
+            if (item.getTotalDiscount()==null) {
+                item.setTotalDiscount(0.0);
+            }
+        }
         return cart;
     }
 }

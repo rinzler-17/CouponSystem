@@ -1,27 +1,30 @@
 package com.monk.couponsystem.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Comparator;
 import java.util.List;
 
-@Setter
-@Getter
+@Data
 public class Cart {
 
     private List<CartItem> items;
+    private Double totalPrice = 0.0;
+    private Double totalDiscount = 0.0;
+    private Double finalPrice;
 
-    public Double getTotalAmount() {
-        double total = 0.0;
+    public Double getTotalPrice() {
+        totalPrice = 0.0;
         for (CartItem item : items) {
-            total += item.getPrice() * item.getQuantity();
+            totalPrice += item.getPrice() * item.getQuantity();
         }
-        return total;
+        return totalPrice;
     }
 
     public void sortByQuantity() {
-        items.sort(Comparator.comparingInt(CartItem::getQuantity).reversed());
+        items.sort(Comparator.comparingLong(CartItem::getQuantity).reversed());
     }
     public void addItem(CartItem item) {
         items.add(item);

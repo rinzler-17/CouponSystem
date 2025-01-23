@@ -1,12 +1,15 @@
 package com.monk.couponsystem.models;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Data
+@Builder
 public class CartItem {
     private Long productId;
-    private Integer quantity;
+    private Long quantity;
     private Double price;
+    private Double totalDiscount;
 }

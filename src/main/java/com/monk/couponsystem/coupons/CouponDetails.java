@@ -23,6 +23,8 @@ public abstract class CouponDetails {
     // computes the discount amount
     public abstract Double getDiscountAmount(Cart cart, ProductService productService);
 
+    public abstract void applyCouponDiscount(Cart cart, ProductService productService);
+
     // populate cart item prices from inventory
     public void populatePrices(Cart cart, ProductService productService) {
         for (CartItem item: cart.getItems()) {

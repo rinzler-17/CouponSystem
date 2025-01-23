@@ -42,5 +42,20 @@ public class ProductWise extends CouponDetails {
         }
         return 0.0;
     }
+
+    @Override
+    public void applyCouponDiscount(Cart cart, ProductService productService) {
+        populatePrices(cart, productService);
+        cart.getTotalPrice();
+
+        for (CartItem item: cart.getItems()) {
+            if (Objects.equals(item.getProductId(), productId)) {
+                cart.setTotalDiscount(item.getQuantity()* item.getPrice()* (discount /100.0));
+                item.setTotalDiscount(cart.getTotalDiscount());
+                break;
+            }
+        }
+        cart.setFinalPrice(cart.getTotalPrice()- cart.getTotalDiscount());
+    }
 }
 
