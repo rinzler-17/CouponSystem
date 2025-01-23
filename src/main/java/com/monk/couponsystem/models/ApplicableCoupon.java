@@ -8,6 +8,6 @@ import lombok.Data;
 @Builder
 public class ApplicableCoupon {
     private Long id;
-    private CouponType type;
+    private String type;
     private Double discount;
 }

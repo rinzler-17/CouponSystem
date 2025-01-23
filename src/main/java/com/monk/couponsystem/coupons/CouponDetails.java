@@ -10,12 +10,22 @@ import lombok.Setter;
 public abstract class CouponDetails {
     protected Long id;
 
+    // validates coupon with the current inventory
     public abstract boolean isValid(ProductService productService);
 
+    // checks if coupon is applicable on a cart
     public abstract boolean isApplicable(Cart cart);
 
+    // computes the discount amount
     public abstract Double getDiscountAmount(Cart cart);
 
-    public abstract CouponType getType();
-
+    // returns the coupon type
+    public String getType() {
+        Class<? extends CouponDetails> clazz = this.getClass();
+        if (clazz.isAnnotationPresent(CouponType.class)) {
+            CouponType annotation = clazz.getAnnotation(CouponType.class);
+            return annotation.type();
+        }
+        return "";
+    }
 }

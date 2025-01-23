@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Setter
 @Getter
+@CouponType(type = "product-wise")
 public class ProductWise extends CouponDetails {
     private Double discount;
     private Long productId;
@@ -39,11 +40,6 @@ public class ProductWise extends CouponDetails {
             }
         }
         return 0.0;
-    }
-
-    @Override
-    public CouponType getType() {
-        return CouponType.PRODUCT_WISE;
     }
 }
 

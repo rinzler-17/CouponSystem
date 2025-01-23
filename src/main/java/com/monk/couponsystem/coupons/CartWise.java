@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@CouponType(type = "cart-wise")
 public class CartWise extends CouponDetails {
     private Double threshold;
     private Double discount;
@@ -27,10 +28,5 @@ public class CartWise extends CouponDetails {
             return cart.getTotalAmount() * (discount/100.0);
         }
         return 0.0;
-    }
-
-    @Override
-    public CouponType getType() {
-        return CouponType.CART_WISE;
     }
 }

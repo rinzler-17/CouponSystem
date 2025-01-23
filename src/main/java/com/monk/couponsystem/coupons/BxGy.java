@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@CouponType(type = "bxgy")
 public class BxGy extends CouponDetails {
     private List<Product> buyProducts;
     private List<Product> getProducts;
@@ -53,10 +54,4 @@ public class BxGy extends CouponDetails {
         // TODO
         return 0.0;
     }
-
-    @Override
-    public CouponType getType() {
-        return CouponType.BXGY;
-    }
-
 }
