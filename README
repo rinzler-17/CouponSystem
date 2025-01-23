@@ -1,0 +1,11 @@
+
+Cases:
+1. In bxgy coupon, there can be case where getProduct includes a product not present in the cart. This can be addressed by
+   creating an inventory of products in the DB, mapping productID to its corresponding price.
+2. Also if addressing above, the cart shall only contain productId and quantity of products since prices will be fetched from inventory.
+3. The cart may not contain aggregated products correctly, like
+   items: [
+       {productId: 1, quantity: 2},
+       {productId: 2, quantity: 3}
+   ]
+
