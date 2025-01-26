@@ -1,13 +1,19 @@
 # CouponSystem
 An app to manage and apply couponEntities on an online shopping cart.
 
-# Components
-This repository contains implementation of a RESTful API server written in Spring. It uses H2 in-memory database underneath.
+## Components
+This repository contains implementation of a RESTful service written in Spring. It uses H2 in-memory database underneath.
 
 ## Building and running the project
+1. Please use the gradle wrapper CLI to build and run the project.
+```commandline
+$ ./gradlew clean build
+$ ./gradlew bootRun
+```
+2. The service runs on port 8081. If this port is already in use on your system, please change the `server.port` value in application.properties and rebuild and run the service.
 
 ## Testing
-A postman collection has been provided which contains the API contracts with sample request and response. This JSON
+A postman collection has been provided which contains the API contracts with sample request. This JSON
 can be imported in Postman and can be used to test the APIs.
 
 Preferred sequence
