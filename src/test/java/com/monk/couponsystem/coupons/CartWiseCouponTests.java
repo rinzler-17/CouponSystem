@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class CartWiseCouponTest {
+public class CartWiseCouponTests {
 
     @Mock
     private ProductService productService;
