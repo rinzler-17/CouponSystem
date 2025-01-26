@@ -8,12 +8,17 @@ import lombok.Setter;
 import java.util.Comparator;
 import java.util.List;
 
+/*
+POJO representing a shopping cart.
+ */
 @Data
 @Builder
 public class Cart {
 
     private List<CartItem> items;
+    @Builder.Default
     private Double totalPrice = 0.0;
+    @Builder.Default
     private Double totalDiscount = 0.0;
     private Double finalPrice;
 

@@ -4,16 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.monk.couponsystem.coupons.CouponDetails;
+import com.monk.couponsystem.coupons.AbstractCoupon;
 import com.monk.couponsystem.coupons.CouponType;
 import jakarta.annotation.PostConstruct;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 
+/*
+This registry keeps a map from coupon type to its corresponding Coupon implementation.
+ */
 @Component
-public class CouponDetailsRegistry {
+public class CouponRegistry {
 
-    private static final Map<String, Class<? extends CouponDetails>> couponTypeMap = new HashMap<>();
+    private static final Map<String, Class<? extends AbstractCoupon>> couponTypeMap = new HashMap<>();
 
     @PostConstruct
     public void initialize() {
@@ -27,20 +30,20 @@ public class CouponDetailsRegistry {
     // Automatically scans packages and registers couponType to the subtype extending CouponDetails
     // Class must be annotated with CouponType annotation
     @SuppressWarnings("unchecked")
-    public static void registerAnnotatedCouponTypes() throws Exception {
+    public void registerAnnotatedCouponTypes() throws Exception {
         Reflections reflections = new Reflections("");
         Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(CouponType.class);
 
         for (Class<?> clazz : annotatedClasses) {
-            if (CouponDetails.class.isAssignableFrom(clazz)) {
+            if (AbstractCoupon.class.isAssignableFrom(clazz)) {
                 // Get the annotation
                 CouponType annotation = clazz.getAnnotation(CouponType.class);
-                couponTypeMap.put(annotation.type(), (Class<? extends CouponDetails>) clazz);
+                couponTypeMap.put(annotation.type(), (Class<? extends AbstractCoupon>) clazz);
             }
         }
     }
 
-    public static Class<? extends CouponDetails> getCouponTypeClass(String type) {
+    public Class<? extends AbstractCoupon> getCouponTypeClass(String type) {
         return couponTypeMap.get(type);
     }
 }

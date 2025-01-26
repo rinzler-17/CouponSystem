@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @CouponType(type = "cart-wise")
-public class CartWise extends CouponDetails {
+public class CartWise extends AbstractCoupon {
     private Double threshold;
     private Double discount;
 

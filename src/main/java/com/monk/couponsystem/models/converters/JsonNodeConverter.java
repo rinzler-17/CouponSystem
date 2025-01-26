@@ -7,6 +7,10 @@ import jakarta.persistence.Converter;
 
 import java.io.IOException;
 
+/*
+This converter helps in parsing a JSON into a POJO.
+It is specifically used to parse coupon details.
+ */
 @Converter(autoApply = true)
 public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
 

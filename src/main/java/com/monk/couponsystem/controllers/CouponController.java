@@ -1,7 +1,7 @@
 package com.monk.couponsystem.controllers;
 
 import com.monk.couponsystem.models.ApplicableCoupon;
-import com.monk.couponsystem.models.Coupon;
+import com.monk.couponsystem.models.CouponEntity;
 import com.monk.couponsystem.models.Cart;
 import com.monk.couponsystem.services.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +22,27 @@ public class CouponController {
 
     // Create coupon
     @PostMapping("/coupons")
-    public ResponseEntity<?> createCoupon(@RequestBody Coupon coupon) {
-        return couponService.createCoupon(coupon);
+    public ResponseEntity<?> createCoupon(@RequestBody CouponEntity couponEntity) {
+        return couponService.createCoupon(couponEntity);
     }
 
     // Get all coupons
     @GetMapping("/coupons")
-    public ResponseEntity<List<Coupon>> getAllCoupons() {
+    public ResponseEntity<List<CouponEntity>> getAllCoupons() {
         return ResponseEntity.ok(couponService.getAllCoupons());
     }
 
     // Get coupon by id
     @GetMapping("/coupons/{id}")
-    public ResponseEntity<Coupon> getCouponById(@PathVariable Long id) {
-        Optional<Coupon> coupon = couponService.getCouponById(id);
+    public ResponseEntity<CouponEntity> getCouponById(@PathVariable Long id) {
+        Optional<CouponEntity> coupon = couponService.getCouponById(id);
         return coupon.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     // Update coupon by id
     @PutMapping("/coupons/{id}")
-    public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id, @RequestBody Coupon updatedCoupon) {
-        return ResponseEntity.ok(couponService.updateCoupon(id, updatedCoupon));
+    public ResponseEntity<CouponEntity> updateCoupon(@PathVariable Long id, @RequestBody CouponEntity updatedCouponEntity) {
+        return ResponseEntity.ok(couponService.updateCoupon(id, updatedCouponEntity));
     }
 
     // Delete coupon by id

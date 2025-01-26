@@ -1,9 +1,11 @@
 package com.monk.couponsystem.models;
 
-import com.monk.couponsystem.coupons.CouponType;
 import lombok.Builder;
 import lombok.Data;
 
+/*
+This represents a coupon when applied to a cart to compute discount it offers.
+ */
 @Data
 @Builder
 public class ApplicableCoupon {

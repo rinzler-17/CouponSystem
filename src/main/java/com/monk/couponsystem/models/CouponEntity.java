@@ -5,13 +5,17 @@ import com.monk.couponsystem.models.converters.JsonNodeConverter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+/*
+Entity representing a coupon type.
+ */
 @Entity
 @Data
-public class Coupon {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CouponEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

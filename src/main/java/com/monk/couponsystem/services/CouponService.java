@@ -1,7 +1,7 @@
 package com.monk.couponsystem.services;
 
-import com.monk.couponsystem.coupons.CouponDetails;
-import com.monk.couponsystem.utils.AbstractCouponDetailsFactory;
+import com.monk.couponsystem.coupons.AbstractCoupon;
+import com.monk.couponsystem.utils.AbstractCouponFactory;
 import com.monk.couponsystem.models.*;
 import com.monk.couponsystem.repositories.CouponRepository;
 
@@ -28,32 +28,32 @@ public class CouponService {
     private final ProductService productService;
 
     @Autowired
-    private final AbstractCouponDetailsFactory couponDetailsFactory;
+    private final AbstractCouponFactory couponFactory;
 
     // TODO: anti pattern: service class should not return response entity, handle exception here
-    public ResponseEntity<?> createCoupon(Coupon coupon) {
-        CouponDetails couponDetails = couponDetailsFactory.getCouponDetails(coupon);
-        if (!couponDetails.isValid(productService)) {
+    public ResponseEntity<?> createCoupon(CouponEntity couponEntity) {
+        AbstractCoupon coupon = couponFactory.getCoupon(couponEntity);
+        if (!coupon.isValid(productService)) {
             return ResponseEntity.badRequest().body("coupon is invalid");
         }
-        return ResponseEntity.ok(couponRepository.save(coupon));
+        return ResponseEntity.ok(couponRepository.save(couponEntity));
     }
 
-    public List<Coupon> getAllCoupons() {
+    public List<CouponEntity> getAllCoupons() {
         return couponRepository.findAll();
     }
 
-    public Optional<Coupon> getCouponById(Long id) {
+    public Optional<CouponEntity> getCouponById(Long id) {
         return couponRepository.findById(id);
     }
 
-    public Coupon updateCoupon(Long id, Coupon updatedCoupon) {
-        Optional<Coupon> existingCoupon = couponRepository.findById(id);
+    public CouponEntity updateCoupon(Long id, CouponEntity updatedCouponEntity) {
+        Optional<CouponEntity> existingCoupon = couponRepository.findById(id);
         if (existingCoupon.isEmpty()) {
             throw new RuntimeException("Coupon not found");
         }
-        updatedCoupon.setId(id);
-        return couponRepository.save(updatedCoupon);
+        updatedCouponEntity.setId(id);
+        return couponRepository.save(updatedCouponEntity);
     }
 
     public void deleteCoupon(Long id) {
@@ -64,18 +64,18 @@ public class CouponService {
 
         //log.info(cart.toString());
         List<ApplicableCoupon> applicableCoupons = new ArrayList<>();
-        List<Coupon> coupons = couponRepository.findAll();
-        if (coupons.isEmpty()) {
+        List<CouponEntity> couponEntities = couponRepository.findAll();
+        if (couponEntities.isEmpty()) {
             return applicableCoupons;
         }
 
-        for (Coupon coupon: coupons) {
-            CouponDetails couponDetails = couponDetailsFactory.getCouponDetails(coupon);
-                if (couponDetails.isApplicable(cart, productService)) {
+        for (CouponEntity couponEntity : couponEntities) {
+            AbstractCoupon coupon = couponFactory.getCoupon(couponEntity);
+                if (coupon.isApplicable(cart, productService)) {
                     applicableCoupons.add(ApplicableCoupon.builder()
-                            .id(couponDetails.getId())
-                            .type(couponDetails.getType())
-                            .discount(couponDetails.getDiscountAmount(cart, productService))
+                            .id(coupon.getId())
+                            .type(coupon.getType())
+                            .discount(coupon.getDiscountAmount(cart, productService))
                             .build());
                 }
         }
@@ -83,13 +83,13 @@ public class CouponService {
     }
 
     public Cart applyCouponToCart(Long id, Cart cart) {
-        Optional<Coupon> coupon = couponRepository.findById(id);
-        if (coupon.isEmpty()) {
+        Optional<CouponEntity> couponEntity = couponRepository.findById(id);
+        if (couponEntity.isEmpty()) {
             throw new RuntimeException("Coupon not found");
         }
 
-        CouponDetails couponDetails = couponDetailsFactory.getCouponDetails(coupon.get());
-        couponDetails.applyCouponDiscount(cart, productService);
+        AbstractCoupon coupon = couponFactory.getCoupon(couponEntity.get());
+        coupon.applyCouponDiscount(cart, productService);
 
         // Initialize null values to 0
         for (CartItem item: cart.getItems()) {

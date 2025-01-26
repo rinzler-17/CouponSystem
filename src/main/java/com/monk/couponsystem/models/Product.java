@@ -6,7 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
-
+/*
+Entity representing a product in the inventory.
+ */
 @Entity
 @Data
 @Builder

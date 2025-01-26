@@ -9,9 +9,13 @@ import lombok.Setter;
 
 import java.util.Optional;
 
+/*
+This is the abstract class defining abstract methods for implementing a discount coupon. All coupon types and
+their subsequent implementations must extend this class.
+ */
 @Setter
 @Getter
-public abstract class CouponDetails {
+public abstract class AbstractCoupon {
     protected Long id;
 
     // validates coupon with the current inventory
@@ -23,9 +27,10 @@ public abstract class CouponDetails {
     // computes the discount amount
     public abstract Double getDiscountAmount(Cart cart, ProductService productService);
 
+    // applies the coupon discount and updates the cart
     public abstract void applyCouponDiscount(Cart cart, ProductService productService);
 
-    // populate cart item prices from inventory
+    // populate cart item prices from product inventory
     public void populatePrices(Cart cart, ProductService productService) {
         for (CartItem item: cart.getItems()) {
             Optional<Product> product = productService.getProductById(item.getProductId());
@@ -42,7 +47,7 @@ public abstract class CouponDetails {
 
     // returns the coupon type
     public String getType() {
-        Class<? extends CouponDetails> clazz = this.getClass();
+        Class<? extends AbstractCoupon> clazz = this.getClass();
         if (clazz.isAnnotationPresent(CouponType.class)) {
             CouponType annotation = clazz.getAnnotation(CouponType.class);
             return annotation.type();

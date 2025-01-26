@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @CouponType(type = "bxgy")
-public class BxGy extends CouponDetails {
+public class BxGy extends AbstractCoupon {
     private List<Product> buyProducts;
     private List<Product> getProducts;
     private Integer repetitionLimit;

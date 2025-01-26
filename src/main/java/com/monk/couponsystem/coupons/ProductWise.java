@@ -2,18 +2,16 @@ package com.monk.couponsystem.coupons;
 
 import com.monk.couponsystem.models.Cart;
 import com.monk.couponsystem.models.CartItem;
-import com.monk.couponsystem.models.Product;
 import com.monk.couponsystem.services.ProductService;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Setter
 @Getter
 @CouponType(type = "product-wise")
-public class ProductWise extends CouponDetails {
+public class ProductWise extends AbstractCoupon {
     private Double discount;
     private Long productId;
 
