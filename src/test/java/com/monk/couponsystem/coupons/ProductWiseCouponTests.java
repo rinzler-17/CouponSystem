@@ -15,9 +15,9 @@ import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -36,20 +36,22 @@ public class ProductWiseCouponTests {
         productWiseCoupon.setDiscount(20.0);
         productWiseCoupon.setProductId(1L);
 
-        Mockito.when(productService.getProductById(1L)).thenReturn(Optional.of(Product.builder()
+        Mockito.when(productService.getProductById(1L)).thenReturn(Product.builder()
                 .productId(1L)
                 .quantity(20L)
-                .price(25.0).build()));
+                .price(25.0).build());
 
-        Mockito.when(productService.getProductById(2L)).thenReturn(Optional.of(Product.builder()
+        Mockito.when(productService.getProductById(2L)).thenReturn(Product.builder()
                 .productId(2L)
                 .quantity(40L)
-                .price(100.0).build()));
+                .price(100.0).build());
     }
 
     @Test
-    public void isValidTest() {
-        assertThat(productWiseCoupon.isValid(productService)).isTrue();
+    public void validateTest() {
+        assertThatNoException().isThrownBy(() -> {
+            productWiseCoupon.validate(productService);
+        });
     }
 
     @Test
