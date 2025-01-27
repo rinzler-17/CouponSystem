@@ -10,7 +10,14 @@ This repository contains implementation of a RESTful service written in Spring. 
 $ ./gradlew clean build
 $ ./gradlew bootRun
 ```
-2. The service runs on port 8081. If this port is already in use on your system, please change the `server.port` value in application.properties and rebuild and run the service.
+
+2. Optionally, a `.jar`  has already been generated containing the recent most changes.
+3. To run the jar, use
+```commandline
+$ java -jar artifacts/couponsystem-0.0.1-SNAPSHOT.jar --server.port=8081
+
+```
+4. The service will run on port 8081. If this port is closed or already in use on your system, please change the `server.port` value.
 
 ## Testing
 A postman collection has been provided which contains the necessary API contracts with sample requests. This JSON
