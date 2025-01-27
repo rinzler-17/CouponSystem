@@ -2,8 +2,6 @@ package com.monk.couponsystem.models;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Comparator;
 import java.util.List;
@@ -30,8 +28,11 @@ public class Cart {
         return totalPrice;
     }
 
-    public void sortByQuantity() {
-        items.sort(Comparator.comparingLong(CartItem::getQuantity).reversed());
+    public void sortbyQuantity(Boolean descending) {
+        if (descending) {
+            items.sort(Comparator.comparingLong(CartItem::getQuantity).reversed());
+        }
+        items.sort(Comparator.comparingLong(CartItem::getQuantity));
     }
     public void addItem(CartItem item) {
         items.add(item);

@@ -1,15 +1,19 @@
 package com.monk.couponsystem.coupons;
 
+import com.monk.couponsystem.exceptions.CouponInvalidException;
+import com.monk.couponsystem.exceptions.NotFoundException;
 import com.monk.couponsystem.models.Cart;
 import com.monk.couponsystem.models.CartItem;
 import com.monk.couponsystem.models.Product;
 import com.monk.couponsystem.services.ProductService;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Setter
 @Getter
 @CouponType(type = "bxgy")
@@ -19,22 +23,23 @@ public class BxGy extends AbstractCoupon {
     private Integer repetitionLimit;
 
     @Override
-    public boolean isValid(ProductService productService) {
-        for (Product product : buyProducts) {
-            if (productService.getProductById(product.getProductId()).isEmpty()) {
-                return false;
+    public void validate(ProductService productService) {
+        // for bxgy to be valid, the product IDs from both lists should exist in product catalog
+        try {
+            for (Product product : buyProducts) {
+                productService.getProductById(product.getProductId());
             }
-        }
-        for (Product product : getProducts) {
-            if (productService.getProductById(product.getProductId()).isEmpty()) {
-                return false;
+            for (Product product : getProducts) {
+                productService.getProductById(product.getProductId());
             }
+        } catch (NotFoundException exception) {
+            throw new CouponInvalidException(exception.getMessage());
         }
-        return true;
     }
 
     @Override
     public boolean isApplicable(Cart cart, ProductService productService) {
+        validate(productService);
 
         Map<Long, Long> cartItemQuantity = cart.getItems().stream().collect(Collectors.toMap(CartItem::getProductId,
                 CartItem::getQuantity));
@@ -67,29 +72,37 @@ public class BxGy extends AbstractCoupon {
 
         // consider product with highest quantity in the cart for free discount
         // if no product from getproducts are present in the cart, just use the product with the maximum price for free discount
-        cart.sortByQuantity();
+        cart.sortbyQuantity(true);
         Map<Long, Long> freeProductQuantity = getProducts.stream().collect(Collectors.toMap(Product::getProductId, Product::getQuantity));
         for (CartItem item : cart.getItems()) {
             if (freeProductQuantity.containsKey(item.getProductId())) {
+                Product catalogProduct = productService.getProductById(item.getProductId());
                 return Optional.of(Product.builder()
-                        .price(item.getPrice())
+                        .price(catalogProduct.getPrice())
                         .productId(item.getProductId())
                         .quantity(freeProductQuantity.get(item.getProductId()))
                         .build());
-                //return item.getPrice() * freeProductQuantity.get(item.getProductId()) * repetition;
             }
         }
 
-        // get prices of all possible free products
+        // select the free product with the max price
+        Optional<Product> result = Optional.of(Product.builder().build());
+        Double maxPrice = 0.0;
         for (Product product : getProducts) {
-            product.setPrice(productService.getProductById(product.getProductId()).get().getPrice());
+            product.setPrice(productService.getProductById(product.getProductId()).getPrice());
+            if (product.getPrice()>maxPrice) {
+                result.get().setProductId(product.getProductId());
+                result.get().setPrice(product.getPrice());
+                result.get().setQuantity(product.getQuantity());
+            }
         }
-        return getProducts.stream().max(Comparator.comparingDouble(Product::getPrice));
-            //    return mostExpProduct.get().getPrice() * mostExpProduct.get().getQuantity() * repetition;
+        return result;
     }
 
     @Override
     public Double getDiscountAmount(Cart cart, ProductService productService) {
+        validate(productService);
+
         long repetition = getCouponRepetitionCount(cart);
         if (repetition==0) {
             return 0.0;
@@ -104,6 +117,8 @@ public class BxGy extends AbstractCoupon {
 
     @Override
     public void applyCouponDiscount(Cart cart, ProductService productService) {
+        validate(productService);
+
         long repetition = getCouponRepetitionCount(cart);
         if (repetition==0) {
             return;

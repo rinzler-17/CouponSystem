@@ -14,11 +14,6 @@ public class CartWise extends AbstractCoupon {
     private Double discount;
 
     @Override
-    public boolean isValid(ProductService productService) {
-        return true;
-    }
-
-    @Override
     public boolean isApplicable(Cart cart, ProductService productService) {
         populatePrices(cart, productService);
         return cart.getTotalPrice() > threshold;

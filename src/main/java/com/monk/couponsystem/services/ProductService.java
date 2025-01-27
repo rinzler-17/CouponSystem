@@ -1,5 +1,6 @@
 package com.monk.couponsystem.services;
 
+import com.monk.couponsystem.exceptions.NotFoundException;
 import com.monk.couponsystem.models.Product;
 import com.monk.couponsystem.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Optional<Product> getProductById(Long productId) {
-        return productRepository.findById(productId);
+    public Product getProductById(Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isEmpty()) {
+            throw new NotFoundException("product", productId.toString());
+        }
+        return product.get();
     }
 
     public List<Product> getAllProducts() {

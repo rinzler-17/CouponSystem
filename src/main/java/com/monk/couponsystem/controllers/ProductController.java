@@ -1,10 +1,13 @@
 package com.monk.couponsystem.controllers;
 
+import com.monk.couponsystem.exceptions.NotFoundException;
 import com.monk.couponsystem.models.Product;
 import com.monk.couponsystem.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,7 @@ public class ProductController {
 
     // Read
     @GetMapping("/{productId}")
-    public Optional<Product> getProductById(@PathVariable Long productId) {
+    public Product getProductById(@PathVariable Long productId) {
         return productService.getProductById(productId);
     }
 

@@ -16,8 +16,9 @@ public class ProductWise extends AbstractCoupon {
     private Long productId;
 
     @Override
-    public boolean isValid(ProductService productService) {
-        return productService.getProductById(productId).isPresent();
+    public void validate(ProductService productService) {
+        // for product coupon to be valid, the product id should exist in product catalog
+        productService.getProductById(productId);
     }
 
     @Override

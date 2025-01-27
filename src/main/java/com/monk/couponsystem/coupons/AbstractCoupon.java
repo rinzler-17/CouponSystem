@@ -1,13 +1,12 @@
 package com.monk.couponsystem.coupons;
 
+import com.monk.couponsystem.exceptions.NotFoundException;
 import com.monk.couponsystem.models.Cart;
 import com.monk.couponsystem.models.CartItem;
 import com.monk.couponsystem.models.Product;
 import com.monk.couponsystem.services.ProductService;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Optional;
 
 /*
 This is the abstract class defining abstract methods for implementing a discount coupon. All coupon types and
@@ -19,7 +18,9 @@ public abstract class AbstractCoupon {
     protected Long id;
 
     // validates coupon with the current inventory
-    public abstract boolean isValid(ProductService productService);
+    public void validate(ProductService productService) {
+        // empty STUB
+    }
 
     // checks if coupon is applicable on a cart
     public abstract boolean isApplicable(Cart cart, ProductService productService);
@@ -30,20 +31,17 @@ public abstract class AbstractCoupon {
     // applies the coupon discount and updates the cart
     public abstract void applyCouponDiscount(Cart cart, ProductService productService);
 
-    // populate cart item prices from product inventory
+    // populate item prices from product catalog
     public void populatePrices(Cart cart, ProductService productService) {
         for (CartItem item: cart.getItems()) {
-            Optional<Product> product = productService.getProductById(item.getProductId());
-            if (product.isEmpty()) {
-                // TODO: create response entity accordingly based on exception
-                throw new RuntimeException(String.format("Cart item %d not found in product inventory", item.getProductId()));
-            } else if (product.get().getQuantity() < item.getQuantity()) {
-                throw new RuntimeException(String.format("Insufficient quantity for cart item %d in product inventory", item.getProductId()));
+            try {
+                Product product = productService.getProductById(item.getProductId());
+                item.setPrice(product.getPrice());
+            } catch (NotFoundException exp) {
+                throw new RuntimeException(String.format("item %d not found in product catalog", item.getProductId()));
             }
-            item.setPrice(product.get().getPrice());
         }
     }
-
 
     // returns the coupon type
     public String getType() {
