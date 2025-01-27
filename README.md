@@ -12,7 +12,7 @@ $ ./gradlew bootRun
 ```
 
 2. Optionally, a `.jar`  has already been generated containing the recent most changes.
-3. To run the jar, use
+3. To run the jar, install java (recommended JVM=17) and use
 ```commandline
 $ java -jar artifacts/couponsystem-0.0.1-SNAPSHOT.jar --server.port=8081
 
