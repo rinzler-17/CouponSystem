@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "Create product in inventory",
+			"name": "Create product in catalog",
 			"event": [
 				{
 					"listen": "test",
@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"product_id\": 3,\r\n    \"price\": 100,\r\n    \"quantity\": 100\r\n}",
+					"raw": "{\r\n    \"product_id\": 4,\r\n    \"price\": 40\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -75,7 +75,7 @@
 			"response": []
 		},
 		{
-			"name": "Get all products in inventory",
+			"name": "Get all products in catalog",
 			"event": [
 				{
 					"listen": "test",
@@ -116,7 +116,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/v1/coupons",
+					"raw": "http://localhost:8081/api/v1/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -125,7 +125,7 @@
 					"path": [
 						"api",
 						"v1",
-						"coupons"
+						"products"
 					]
 				},
 				"description": "The tests in this request validate that:\n\n- the response code is 200\n- the response is a JSON object\n- the response has an 'arg' object\n- the response has 'headers' object\n- the response has a 'URL' property"
@@ -233,7 +233,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"type\": \"cart-wise\",\r\n    \"details\": {\r\n        \"threshold\": 900,\r\n        \"discount\": 20\r\n    }\r\n}",
+					"raw": "{\r\n    \"type\": \"cart-wise\",\r\n    \"details\": {\r\n        \"threshold\": 10,\r\n        \"discount\": 20\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -300,7 +300,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"type\": \"product-wise\",\r\n\"details\": {\r\n    \"product_id\": 2,\r\n    \"discount\": 20\r\n    }\r\n}",
+					"raw": "{\r\n    \"type\": \"product-wise\",\r\n    \"details\": {\r\n        \"product_id\": 2,\r\n        \"discount\": 30\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -367,7 +367,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"type\": \"bxgy\",\r\n    \"details\": {\r\n        \"buy_products\": [\r\n            {\"product_id\": 1, \"quantity\": 3},\r\n            {\"product_id\": 2,\"quantity\": 3}\r\n        ],\r\n        \"get_products\": [\r\n            {\"product_id\": 5, \"quantity\": 2},\r\n            {\"product_id\": 2, \"quantity\": 3}\r\n        ],\r\n        \"repetition_limit\": 2\r\n    }\r\n}",
+					"raw": "{\r\n    \"type\": \"bxgy\",\r\n    \"details\": {\r\n        \"buy_products\": [\r\n            {\"product_id\": 1, \"quantity\": 3},\r\n            {\"product_id\": 2,\"quantity\": 3}\r\n        ],\r\n        \"get_products\": [\r\n            {\"product_id\": 4, \"quantity\": 2},\r\n            {\"product_id\": 2, \"quantity\": 100}\r\n        ],\r\n        \"repetition_limit\": 2\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -434,7 +434,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"items\": [\r\n            {\"product_id\": 1, \"quantity\": 9}, // Product X\r\n            {\"product_id\": 2, \"quantity\": 3}, // Product Y\r\n            {\"product_id\": 3, \"quantity\": 2} // Product Z\r\n        ]\r\n}",
+					"raw": "{\r\n    \"items\": [\r\n        {\"product_id\": 1, \"quantity\": 100}, // Product X\r\n        {\"product_id\": 2, \"quantity\": 3}, // Product Y\r\n        {\"product_id\": 3, \"quantity\": 2} // Product Z\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -442,7 +442,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/coupons/applicable-coupons",
+					"raw": "http://localhost:8081/api/v1/applicable-coupons",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -451,7 +451,6 @@
 					"path": [
 						"api",
 						"v1",
-						"coupons",
 						"applicable-coupons"
 					]
 				},
@@ -502,7 +501,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"items\": [\r\n            {\"product_id\": 1, \"quantity\": 9}, // Product X\r\n            {\"product_id\": 2, \"quantity\": 3}, // Product Y\r\n            {\"product_id\": 3, \"quantity\": 2} // Product Z\r\n        ]\r\n}",
+					"raw": "{\r\n        \"items\": [\r\n            {\"product_id\": 1, \"quantity\": 100}, // Product X\r\n            {\"product_id\": 2, \"quantity\": 3}, // Product Y\r\n            {\"product_id\": 3, \"quantity\": 2} // Product Z\r\n        ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -510,7 +509,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/coupons/apply-coupon/:id",
+					"raw": "http://localhost:8081/api/v1/apply-coupon/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -519,14 +518,13 @@
 					"path": [
 						"api",
 						"v1",
-						"coupons",
 						"apply-coupon",
 						":id"
 					],
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "3"
 						}
 					]
 				},
