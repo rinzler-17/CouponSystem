@@ -1,6 +1,7 @@
 package com.monk.couponsystem.coupons;
 
 import com.monk.couponsystem.exceptions.CouponInvalidException;
+import com.monk.couponsystem.exceptions.NotFoundException;
 import com.monk.couponsystem.models.Cart;
 import com.monk.couponsystem.models.CartItem;
 import com.monk.couponsystem.models.Product;
@@ -57,6 +58,8 @@ public class BxGyCouponTests {
                 .productId(3L)
                 .quantity(10L)
                 .price(50.0).build());
+
+        Mockito.when(productService.getProductById(5L)).thenThrow(new NotFoundException("product", "5"));
     }
 
     @Test
