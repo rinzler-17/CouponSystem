@@ -87,7 +87,7 @@ public class CouponService {
         AbstractCoupon coupon = couponFactory.getCoupon(couponEntity.get());
         coupon.applyCouponDiscount(cart, productService);
 
-        // Initialize null values to 0
+        // Initialize null discount values to 0
         for (CartItem item: cart.getItems()) {
             if (item.getTotalDiscount()==null) {
                 item.setTotalDiscount(0.0);
