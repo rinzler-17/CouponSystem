@@ -367,7 +367,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"type\": \"bxgy\",\r\n    \"details\": {\r\n        \"buy_products\": [\r\n            {\"product_id\": 1, \"quantity\": 3},\r\n            {\"product_id\": 2,\"quantity\": 3}\r\n        ],\r\n        \"get_products\": [\r\n            {\"product_id\": 4, \"quantity\": 2},\r\n            {\"product_id\": 2, \"quantity\": 100}\r\n        ],\r\n        \"repetition_limit\": 2\r\n    }\r\n}",
+					"raw": "{\r\n    \"type\": \"bxgy\",\r\n    \"details\": {\r\n        \"buy_products\": [\r\n            {\"product_id\": 1, \"quantity\": 3},\r\n            {\"product_id\": 2,\"quantity\": 3}\r\n        ],\r\n        \"get_products\": [\r\n            {\"product_id\": 4, \"quantity\": 2},\r\n            {\"product_id\": 3, \"quantity\": 2}\r\n        ],\r\n        \"repetition_limit\": 2\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -434,7 +434,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"items\": [\r\n        {\"product_id\": 1, \"quantity\": 100}, // Product X\r\n        {\"product_id\": 2, \"quantity\": 3}, // Product Y\r\n        {\"product_id\": 3, \"quantity\": 2} // Product Z\r\n    ]\r\n}",
+					"raw": "{\r\n    \"items\": [\r\n        {\"product_id\": 1, \"quantity\": 2},\r\n        {\"product_id\": 2, \"quantity\": 4},\r\n        {\"product_id\": 3, \"quantity\": 5}\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -501,7 +501,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"items\": [\r\n            {\"product_id\": 1, \"quantity\": 100}, // Product X\r\n            {\"product_id\": 2, \"quantity\": 3}, // Product Y\r\n            {\"product_id\": 3, \"quantity\": 2} // Product Z\r\n        ]\r\n}",
+					"raw": "{\r\n        \"items\": [\r\n            {\"product_id\": 1, \"quantity\": 2},\r\n            {\"product_id\": 2, \"quantity\": 4},\r\n            {\"product_id\": 3, \"quantity\": 5}\r\n        ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
